@@ -33,9 +33,17 @@ export default function GroceryList() {
     );
   }
   return (
-    <View>
+    <View style={styles.container}>
       <Text>GroceryList</Text>
+      {/* {groceries.map((item, index) => {
+        return (
+          <View key={index}>
+            <Text>{item}</Text>
+          </View>
+        );
+      })} */}
       <FlatList
+        style={styles.list}
         data={groceries}
         //   we pass a component to be rendered for each item in the array
         renderItem={renderGrocery}
@@ -57,4 +65,9 @@ export default function GroceryList() {
   );
 }
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  container: { flex: 1 },
+  list: {
+    backgroundColor: "#000",
+  },
+});
