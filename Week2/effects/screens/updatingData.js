@@ -4,47 +4,52 @@ import React, { useState, useEffect } from "react";
 //lets talk to a crypto api and update the data frequently
 //https://api.coinlore.net/api/tickers/
 export default function updatingData() {
-  const [bitcoinData, setBitcoinData] = useState(null);
+  const [joke, setJoke] = useState(null);
+  const [loading, setLoading] = useState(false);
 
-  const fetchData = async () => {
+  const fetchJoke = async () => {
     try {
-      const response = await fetch("https://api.coinlore.net/api/tickers/");
-      console.log(response);
+      setLoading(true);
+      const response = await fetch("https://v2.jokeapi.dev/joke/Any?safe-mode");
       const data = await response.json();
-      // Find Bitcoin data (symbol: BTC)
-      const bitcoin = data.data.find((coin) => coin.symbol === "BTC");
-      setBitcoinData(bitcoin);
+
+      if (data.type === "single") {
+        setJoke({
+          setup: null,
+          delivery: data.joke,
+        });
+      } else {
+        setJoke({
+          setup: data.setup,
+          delivery: data.delivery,
+        });
+      }
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error("Error fetching joke:", error);
+    } finally {
+      setLoading(false);
     }
   };
 
-  // Fetch initial data when component mounts
+  // Fetch initial joke when component mounts
   useEffect(() => {
-    fetchData();
+    fetchJoke();
   }, []);
 
   return (
     <View style={styles.container}>
-      {bitcoinData ? (
+      {loading ? (
+        <Text style={styles.loading}>Loading joke...</Text>
+      ) : joke ? (
         <>
-          <Text style={styles.title}>Bitcoin (BTC)</Text>
-          <Text style={styles.price}>
-            ${parseFloat(bitcoinData.price_usd).toLocaleString()}
-          </Text>
-          <Text style={styles.change}>
-            24h Change: {bitcoinData.percent_change_24h}%
-          </Text>
-          <Text style={styles.marketCap}>
-            Market Cap: $
-            {parseFloat(bitcoinData.market_cap_usd).toLocaleString()}
-          </Text>
+          {joke.setup && <Text style={styles.setup}>{joke.setup}</Text>}
+          <Text style={styles.delivery}>{joke.delivery}</Text>
         </>
       ) : (
-        <Text>Loading Bitcoin data...</Text>
+        <Text>No joke available</Text>
       )}
 
-      <Button title="Update Data" onPress={fetchData} />
+      <Button title="Get New Joke" onPress={fetchJoke} style={styles.button} />
     </View>
   );
 }
@@ -56,24 +61,25 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
   },
-  title: {
+  setup: {
+    fontSize: 20,
+    textAlign: "center",
+    marginBottom: 20,
+    color: "#333",
+  },
+  delivery: {
     fontSize: 24,
     fontWeight: "bold",
-    marginBottom: 10,
-  },
-  price: {
-    fontSize: 32,
-    fontWeight: "bold",
+    textAlign: "center",
     color: "#2196F3",
-    marginBottom: 10,
+    marginBottom: 30,
   },
-  change: {
+  loading: {
     fontSize: 18,
-    marginBottom: 5,
-  },
-  marketCap: {
-    fontSize: 16,
     color: "#666",
     marginBottom: 20,
+  },
+  button: {
+    marginTop: 20,
   },
 });
