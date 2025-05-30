@@ -5,6 +5,7 @@ import {
   FlatList,
   TextInput,
   Button,
+  ScrollView,
 } from "react-native";
 import { useState } from "react";
 
@@ -66,9 +67,7 @@ export default function GroceryList() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1 },
   list: {
-    backgroundColor: "#000",
-    maxHeight: 200,
+    maxHeight: 100,
   },
 });
