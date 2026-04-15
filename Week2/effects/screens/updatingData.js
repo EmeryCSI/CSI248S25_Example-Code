@@ -1,53 +1,63 @@
 import { StyleSheet, Text, View, Button } from "react-native";
-import React, { useState, useEffect } from "react";
-
+import { useState, useEffect } from "react";
 
 export default function updatingData() {
-  const [joke, setJoke] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const [joke, setJoke] = useState({});
+  const [loading, setLoading] = useState(true);
 
   const fetchJoke = async () => {
     try {
       setLoading(true);
       const response = await fetch("https://v2.jokeapi.dev/joke/Any?safe-mode");
       const data = await response.json();
-
+      console.log(data);
       if (data.type === "single") {
         setJoke({
           setup: null,
           delivery: data.joke,
         });
-      } else {
-        setJoke({
-          setup: data.setup,
-          delivery: data.delivery,
-        });
+      } else if (data.type === "twopart") {
+        setJoke({ setup: data.setup, delivery: data.delivery });
       }
     } catch (error) {
-      console.error("Error fetching joke:", error);
+      console.error(error);
     } finally {
       setLoading(false);
     }
   };
-
-  // Fetch initial joke when component mounts
   useEffect(() => {
     fetchJoke();
   }, []);
+  if (loading) {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.loading}>Loading joke...</Text>
+        <Button
+          title="Get New Joke"
+          onPress={fetchJoke}
+          style={styles.button}
+        />
+      </View>
+    );
+  }
+
+  if (joke) {
+    return (
+      <View style={styles.container}>
+        {joke.setup && <Text style={styles.setup}>{joke.setup}</Text>}
+        <Text style={styles.delivery}>{joke.delivery}</Text>
+        <Button
+          title="Get New Joke"
+          onPress={fetchJoke}
+          style={styles.button}
+        />
+      </View>
+    );
+  }
 
   return (
     <View style={styles.container}>
-      {loading ? (
-        <Text style={styles.loading}>Loading joke...</Text>
-      ) : joke ? (
-        <>
-          {joke.setup && <Text style={styles.setup}>{joke.setup}</Text>}
-          <Text style={styles.delivery}>{joke.delivery}</Text>
-        </>
-      ) : (
-        <Text>No joke available</Text>
-      )}
-
+      <Text>No joke available</Text>
       <Button title="Get New Joke" onPress={fetchJoke} style={styles.button} />
     </View>
   );
