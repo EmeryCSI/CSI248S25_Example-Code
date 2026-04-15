@@ -1,8 +1,7 @@
 import { StyleSheet, Text, View, Button } from "react-native";
 import React, { useState, useEffect } from "react";
 
-//lets talk to a crypto api and update the data frequently
-//https://api.coinlore.net/api/tickers/
+
 export default function updatingData() {
   const [joke, setJoke] = useState(null);
   const [loading, setLoading] = useState(false);
