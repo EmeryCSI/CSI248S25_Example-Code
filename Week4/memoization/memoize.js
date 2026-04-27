@@ -1,8 +1,7 @@
-/**
- * Creates a memoized version of a function that caches its results
- * @param {Function} fn - The function to memoize
- * @returns {Function} - A new function that caches results of the original function
- */
+//This method takes a function a "MemoIZE"s it
+//Essentially it cache's the results based on the given parameters
+//If the function has been run previously with those paramsters it
+//returns the cached result.
 function memoize(fn) {
   // Create a Map to store cached results
   // Maps are used because they can use any value as a key (unlike objects)
