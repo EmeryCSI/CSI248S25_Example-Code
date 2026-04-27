@@ -58,11 +58,11 @@ const RefScreen = () => {
 
       <View style={styles.section}>
         <Text style={styles.subtitle}>Key Points about useRef:</Text>
-        <Text>• useRef returns a mutable ref object</Text>
-        <Text>• Changes to .current don't trigger re-renders</Text>
-        <Text>• Perfect for storing values that persist between renders</Text>
-        <Text>• Commonly used for accessing DOM elements</Text>
-        <Text>• Can store any mutable value</Text>
+        <Text>  useRef returns a mutable ref object</Text>
+        <Text>  Changes to .current don't trigger re-renders</Text>
+        <Text>  Perfect for storing values that persist between renders</Text>
+        <Text>  Commonly used for accessing DOM elements</Text>
+        <Text>  Can store any mutable value</Text>
       </View>
     </ScrollView>
   );
