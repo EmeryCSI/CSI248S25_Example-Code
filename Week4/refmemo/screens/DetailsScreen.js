@@ -20,8 +20,8 @@ const DetailsScreen = () => {
       <View style={styles.section}>
         <Text>Key Points:</Text>
         {/* route.params contains all the data passed during navigation */}
-        <Text>• Params are accessed via route.params</Text>
-        <Text>• The message was passed from the Params screen</Text>
+        <Text>Params are accessed via route.params</Text>
+        <Text>The message was passed from the Params screen</Text>
       </View>
     </View>
   );
