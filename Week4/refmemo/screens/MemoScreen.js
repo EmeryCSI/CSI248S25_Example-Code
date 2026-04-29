@@ -64,9 +64,9 @@ const MemoScreen = () => {
 
       <View style={styles.section}>
         <Text>Key Points:</Text>
-        <Text>• Regular fetch runs every time</Text>
-        <Text>• Memoized fetch only runs when userId changes</Text>
-        <Text>• Check console logs to see when fetches occur</Text>
+        <Text>  Regular fetch runs every time</Text>
+        <Text>  Memoized fetch only runs when userId changes</Text>
+        <Text>  Check console logs to see when fetches occur</Text>
       </View>
     </View>
   );
